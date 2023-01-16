@@ -39,10 +39,10 @@ extension UIViewController {
         present(alertController, animated: true)
     }
     
-    func networkErrorAlert(repeatAction: @escaping () -> Void) {
+    func networkErrorAlert(message: String, repeatAction: @escaping () -> Void) {
         let alertController = UIAlertController(
-            title: "Вы не подключены к интернету",
-            message: "Данное приложение не работает без доступа к интернету",
+            title: "Сетевая ошибка",
+            message: "Не удалось загрузить следующую информацию: \(message)",
             preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Закрыть", style: .default, handler: nil)
         alertController.addAction(cancelAction)

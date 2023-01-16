@@ -2,6 +2,11 @@ excluded:
   - ${PWD}/Carthage
   - ${PWD}/Pods
   - ${PWD}/DerivedData
+  
+disabled_rules:
+  - type_body_length
+  - function_body_length
+  - file_length
 
 trailing_whitespace:
   ignores_empty_lines: true

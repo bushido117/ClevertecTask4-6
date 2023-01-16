@@ -11,13 +11,25 @@ class Section: Hashable {
     
   var id = UUID()
   var title: String
-  var atms: [ATMElement]
+  var atms: [ATMElement]?
+  var infoboxes: [InfoboxElement]?
+  var filials: [FilialElement]?
   
-  init(title: String, atms: [ATMElement]) {
+    init(title: String, atms: [ATMElement]?) {
     self.title = title
     self.atms = atms
   }
+    
+    init(title: String, infoboxes: [InfoboxElement]?) {
+    self.title = title
+    self.infoboxes = infoboxes
+  }
   
+    init(title: String, filials: [FilialElement]?) {
+    self.title = title
+    self.filials = filials
+  }
+    
   func hash(into hasher: inout Hasher) {
     hasher.combine(id)
   }

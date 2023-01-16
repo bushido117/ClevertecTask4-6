@@ -21,6 +21,9 @@ final class CustomAnnotationView: MKMarkerAnnotationView {
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         canShowCallout = false
+        if let annotation = annotation as? CustomAnnotation {
+            glyphText = annotation.type.typeLetter
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

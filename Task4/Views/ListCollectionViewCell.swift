@@ -13,20 +13,25 @@ final class ListCollectionViewCell: UICollectionViewCell {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isUserInteractionEnabled = false
-        scrollView.contentSize = CGSize(width: 250, height: 0)
+        scrollView.contentSize = CGSize(width: 300, height: 0)
         return scrollView
     }()
+    
     private lazy var installPlaceLabel: UILabel = {
         let label = UILabel()
         label.sizeToFit()
         label.numberOfLines = 3
         return label
     }()
+    
     private lazy var workTimeLabel: UILabel = {
         let label = UILabel()
         label.sizeToFit()
+        label.numberOfLines = 3
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
+    
     private lazy var currencyLabel: UILabel = {
         let label = UILabel()
         label.sizeToFit()
@@ -62,7 +67,7 @@ final class ListCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         contentView.snp.makeConstraints { make in
-            make.width.equalTo(250)
+            make.width.equalTo(300)
         }
         installPlaceLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -79,13 +84,24 @@ final class ListCollectionViewCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.top.equalTo(workTimeLabel.snp.bottom).offset(5)
             make.left.equalToSuperview().offset(2)
-
         }
     }
     
-    func setProperties(atm: ATMElement) {
+    func setPropertiesForATM(atm: ATMElement) {
         installPlaceLabel.text = atm.installPlace
         workTimeLabel.text = atm.workTime
         currencyLabel.text = atm.currency
+    }
+    
+    func setPropertiesForInfobox(infobox: InfoboxElement) {
+        installPlaceLabel.text = infobox.installPlace
+        workTimeLabel.text = infobox.workTime
+        currencyLabel.text = infobox.currency
+    }
+    
+    func setPropertiesForFilial(filial: FilialElement) {
+        installPlaceLabel.text = filial.installPlace
+        workTimeLabel.text = filial.workTime
+        currencyLabel.text = filial.phoneNumber
     }
 }

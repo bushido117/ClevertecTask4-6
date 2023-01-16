@@ -19,13 +19,17 @@ final class DetailsViewController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
+    
     private lazy var routButton: UIButton = {
         let button = UIButton(configuration: .borderedTinted())
         button.setTitle("Построить маршрут", for: .normal)
         button.addTarget(self, action: #selector(makeRout), for: .touchUpInside)
         return button
     }()
+    
     var atm: ATMElement?
+    var infobox: InfoboxElement?
+    var filial: FilialElement?
     var authorizationStatusDenied: Bool?
 
     override func viewDidLoad() {
@@ -56,22 +60,30 @@ final class DetailsViewController: UIViewController {
         }
     }
     
-    @objc private  func makeRout() {
+    @objc private func makeRout() {
         guard let authorizationStatusDenied = authorizationStatusDenied else { return }
         if authorizationStatusDenied {
             self.locationServicesOffAlert()
         } else {
             if let atm = atm {
-                let coordinate = CLLocationCoordinate2D(
-                    latitude: (Double(atm.gpsX) ?? 0),
-                    longitude: (Double(atm.gpsY) ?? 0))
-                let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
-                mapItem.name = "Destination"
-                mapItem.openInMaps(launchOptions: [
-                    MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-                ])
+                createRout(to: atm)
+            } else if let infobox = infobox {
+                createRout(to: infobox)
+            } else if let filial = filial {
+                createRout(to: filial)
             }
         }
+    }
+    
+    private func createRout<T: Coordinate>(to element: T) {
+        let coordinate = CLLocationCoordinate2D(
+            latitude: (Double(element.gpsX) ?? 0),
+            longitude: (Double(element.gpsY) ?? 0))
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
+        mapItem.name = "Destination"
+        mapItem.openInMaps(launchOptions: [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+        ])
     }
 }
 
@@ -86,7 +98,7 @@ extension DetailsViewController: UITableViewDelegate {
 
 extension DetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        CellsNames.allCases.count
+        13
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,7 +106,14 @@ extension DetailsViewController: UITableViewDataSource {
             withIdentifier: String(describing: DetailsTableViewCell.self),
             for: indexPath) as? DetailsTableViewCell else { return UITableViewCell()}
         if let atm = atm {
-            cell.setProperties(cellsNames: CellsNames.allCases[indexPath.row], cellsDescriptions: atm)
+            cell.setPropertiesForATM(cellsNames: CellsNameForATMAndInfobox.allCases[indexPath.row],
+                                     cellsDescriptions: atm)
+        } else if let infobox = infobox {
+            cell.setPropertiesForInfobox(cellsNames: CellsNameForATMAndInfobox.allCases[indexPath.row],
+                                         cellsDescriptions: infobox)
+        } else if let filial = filial {
+            cell.setPropertiesForFilial(cellsNames: CellsNameForFilial.allCases[indexPath.row],
+                                        cellsDescriptions: filial)
         }
         return cell
     }

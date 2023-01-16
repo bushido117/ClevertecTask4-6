@@ -5,12 +5,13 @@
 //  Created by Вадим Сайко on 9.01.23.
 //
 
-struct ATMElement: Codable, Hashable {
+struct ATMElement: Codable, Hashable, Coordinate {
+    
     let id, area, cityType, city: String
     let addressType, address, house, installPlace: String
+    let currency, cashIn: String?
     let workTime, gpsX, gpsY, installPlaceFull: String
-    let workTimeFull, atmType, atmError, currency: String
-    let cashIn, atmPrinter: String
+    let workTimeFull, atmType, atmError, atmPrinter: String
 
     enum CodingKeys: String, CodingKey {
         case id, area

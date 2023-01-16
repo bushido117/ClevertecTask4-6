@@ -5,7 +5,6 @@
 //  Created by Вадим Сайко on 9.01.23.
 //
 
-import Foundation
 import UIKit
 import MapKit
 import SnapKit
@@ -21,35 +20,38 @@ final class CalloutView: UIView {
         view.backgroundColor = .systemBlue
         return view
     }()
-//    Чтобы при тапе на calloutView оно не исчезало
-    private lazy var backgroundButton = UIButton()
+
     private lazy var installPlaceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         label.sizeToFit()
         return label
     }()
+    
     private lazy var workTimeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
-        label.numberOfLines = 3
+        label.numberOfLines = 4
         return label
     }()
+    
     private lazy var currencyLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
+    
     private lazy var cashInLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
+    
     private lazy var detailsButton: UIButton = {
         let button = UIButton(type: .roundedRect)
         button.setTitle("Подробнее", for: .normal)
@@ -59,12 +61,14 @@ final class CalloutView: UIView {
         button.addTarget(self, action: #selector(detailButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.bounces = false
-        scrollView.contentSize = CGSize(width: 210, height: 170)
+        scrollView.contentSize = CGSize(width: 210, height: 190)
         return scrollView
     }()
+    
     private var mapView: MKMapView? {
         var view = superview
         while view != nil {
@@ -73,6 +77,8 @@ final class CalloutView: UIView {
         }
         return nil
     }
+    
+    private lazy var backgroundButton = UIButton()
     weak var annotation: CustomAnnotation?
 
     init(annotation: CustomAnnotation) {
@@ -103,7 +109,7 @@ final class CalloutView: UIView {
             make.edges.equalToSuperview()
         }
         contentView.snp.makeConstraints { make in
-            make.height.equalTo(170)
+            make.height.equalTo(190)
             make.width.equalToSuperview()
         }
         backgroundButton.snp.makeConstraints { make in
@@ -140,8 +146,13 @@ final class CalloutView: UIView {
     private func setProperties(for annotation: CustomAnnotation) {
         installPlaceLabel.text = annotation.placeName
         workTimeLabel.text = annotation.workTime
-        currencyLabel.text = annotation.currency
-        cashInLabel.text = annotation.cashIn
+        if annotation.type == .filial {
+            currencyLabel.text = annotation.address
+            cashInLabel.text = annotation.phoneNumber
+        } else {
+            currencyLabel.text = annotation.currency
+            cashInLabel.text = annotation.cashIn
+        }
     }
     
     @objc func detailButtonTapped(_ sender: UIButton) {
