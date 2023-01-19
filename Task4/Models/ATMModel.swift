@@ -5,12 +5,13 @@
 //  Created by Вадим Сайко on 9.01.23.
 //
 
-struct ATMElement: Codable, Hashable, Coordinate {
+struct ATMElement: Codable, Hashable, BelarusbankElement {
     
     let id, area, cityType, city: String
     let addressType, address, house, installPlace: String
     let currency, cashIn: String?
-    let workTime, gpsX, gpsY, installPlaceFull: String
+    let workTime: String
+    let gpsX, gpsY, installPlaceFull: String
     let workTimeFull, atmType, atmError, atmPrinter: String
 
     enum CodingKeys: String, CodingKey {

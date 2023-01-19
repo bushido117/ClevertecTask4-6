@@ -184,7 +184,7 @@ final class ListViewController: UIViewController {
 extension ListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         navigationController?.popViewController(animated: true)
-        guard let item = dataSource.itemIdentifier(for: indexPath) as? any Coordinate else { return }
+        guard let item = dataSource.itemIdentifier(for: indexPath) as? any BelarusbankElement else { return }
         delegate?.collectinItemSelected(installPlace: item.installPlace)
     }
 }

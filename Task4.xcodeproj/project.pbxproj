@@ -32,6 +32,8 @@
 		7284C5BE296E14C800358533 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7284C5BD296E14C800358533 /* ActivityIndicatorView.swift */; };
 		728DE7B0297340DE00029194 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728DE7AF297340DE00029194 /* CheckBoxView.swift */; };
 		728DE7B3297538BA00029194 /* BelarusbankElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728DE7B2297538BA00029194 /* BelarusbankElement.swift */; };
+		728DE7B729782B5600029194 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 728DE7B529782B5600029194 /* Model.xcdatamodeld */; };
+		728DE7C129788BD600029194 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728DE7C029788BD600029194 /* CoreDataService.swift */; };
 		A40A7454F1DF184AE8CD84C6 /* Pods_Task4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AEA218A1046207176C90D2 /* Pods_Task4.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,8 @@
 		7284C5BD296E14C800358533 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		728DE7AF297340DE00029194 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
 		728DE7B2297538BA00029194 /* BelarusbankElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BelarusbankElement.swift; sourceTree = "<group>"; };
+		728DE7B629782B5600029194 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		728DE7C029788BD600029194 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		F4AEA218A1046207176C90D2 /* Pods_Task4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Task4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9C4CDE989E2B3A9ABC5F7A7 /* Pods-Task4.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Task4.debug.xcconfig"; path = "Target Support Files/Pods-Task4/Pods-Task4.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +118,7 @@
 				7284C592296E015900358533 /* Views */,
 				7284C59D296E017800358533 /* Controllers */,
 				7284C5A4296E017E00358533 /* Support files */,
+				728DE7B529782B5600029194 /* Model.xcdatamodeld */,
 			);
 			path = Task4;
 			sourceTree = "<group>";
@@ -122,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				7284C585296E013E00358533 /* APIService.swift */,
+				728DE7C029788BD600029194 /* CoreDataService.swift */,
 				7284C586296E013E00358533 /* NetworkMonitor.swift */,
 			);
 			path = Services;
@@ -349,11 +355,13 @@
 				7284C591296E015300358533 /* DetailsModel.swift in Sources */,
 				7284C5A1296E017800358533 /* ViewController.swift in Sources */,
 				7284C5A3296E017800358533 /* ListViewController.swift in Sources */,
+				728DE7B729782B5600029194 /* Model.xcdatamodeld in Sources */,
 				7284C59A296E015900358533 /* CalloutView.swift in Sources */,
 				7284C5BC296E05C100358533 /* FilialModel.swift in Sources */,
 				7284C59B296E015900358533 /* ListCollectionViewCell.swift in Sources */,
 				728DE7B3297538BA00029194 /* BelarusbankElement.swift in Sources */,
 				7284C590296E015300358533 /* CustomAnnotationModel.swift in Sources */,
+				728DE7C129788BD600029194 /* CoreDataService.swift in Sources */,
 				7284C5B7296E017E00358533 /* SceneDelegate.swift in Sources */,
 				7284C599296E015900358533 /* CustomAnnotationView.swift in Sources */,
 				7284C5A2296E017800358533 /* DetailsViewController.swift in Sources */,
@@ -572,6 +580,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		728DE7B529782B5600029194 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				728DE7B629782B5600029194 /* Model.xcdatamodel */,
+			);
+			currentVersion = 728DE7B629782B5600029194 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7284C565296E010100358533 /* Project object */;
 }

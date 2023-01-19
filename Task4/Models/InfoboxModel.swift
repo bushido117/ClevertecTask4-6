@@ -5,7 +5,7 @@
 //  Created by Вадим Сайко on 10.01.23.
 //
 
-struct InfoboxElement: Codable, Hashable, Coordinate {
+struct InfoboxElement: Codable, Hashable, BelarusbankElement {
     
     let id: Int
     let area, cityType, city, addressType: String

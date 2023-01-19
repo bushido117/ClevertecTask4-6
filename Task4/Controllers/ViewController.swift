@@ -10,6 +10,7 @@ import MapKit
 import CoreLocation
 import SnapKit
 import Network
+import CoreData
 
 final class ViewController: UIViewController {
     
@@ -45,6 +46,7 @@ final class ViewController: UIViewController {
     private var filialsAnnotations = [CustomAnnotation]()
     private var mapChangedFromUserInteraction = false
     private var isCheckBoxOpened = false
+    private let userDefaults = UserDefaults()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +57,13 @@ final class ViewController: UIViewController {
         if NetworkMonitor.shared.isReachable {
             loadData(reload: false)
         } else {
-            self.noInternetConnectionAlert()
+            if userDefaults.bool(forKey: "NotfirstLaunch") {
+                getATMsFromEntity()
+                getInfoboxesFromEntity()
+                getFilialsFromEntity()
+            } else {
+                self.noInternetConnectionAlert()
+            }
         }
         setConstraints()
     }
@@ -121,6 +129,7 @@ final class ViewController: UIViewController {
                 self?.checkBoxAtms = sortedAtms
                 DispatchQueue.main.async {
                     self?.createATMAnnotations()
+                    CoreDataService.shared.saveATMs(atms: sortedAtms)
                 }
             case .failure(let failure):
                print(failure)
@@ -139,6 +148,7 @@ final class ViewController: UIViewController {
                 self?.checkBoxInfoboxes = sortedInfoboxes
                 DispatchQueue.main.async {
                     self?.createInfoboxAnnotations()
+                    CoreDataService.shared.saveInfoboxes(infoboxes: sortedInfoboxes)
                 }
             case .failure(let failure):
                print(failure)
@@ -155,6 +165,7 @@ final class ViewController: UIViewController {
                 self?.checkBoxFilials = sortedFilials
                 DispatchQueue.main.async {
                     self?.createFilialAnnotations()
+                    CoreDataService.shared.saveFilials(filials: sortedFilials)
                 }
             case .failure(let failure):
                print(failure)
@@ -178,10 +189,11 @@ final class ViewController: UIViewController {
             self?.view.isUserInteractionEnabled = true
             self?.navigationItem.rightBarButtonItem?.isEnabled = true
             self?.navigationItem.leftBarButtonItem?.isEnabled = true
+            self?.userDefaults.set(true, forKey: "NotfirstLaunch")
         }
     }
     
-    private func sortArraysByDistance<T: Coordinate>(array: [T]) -> [T] {
+    private func sortArraysByDistance<T: BelarusbankElement>(array: [T]) -> [T] {
         let defaultLocation = CLLocation(latitude: 52.425163, longitude: 31.015039)
         var sortedArray = [T]()
             if CLLocationManager.locationServicesEnabled() &&
@@ -305,16 +317,124 @@ final class ViewController: UIViewController {
     }
     
     @objc private func refreshVC() {
+        checkBoxView.removeFromSuperview()
+        isCheckBoxOpened = false
+        checkBoxView = CheckBoxView()
         if NetworkMonitor.shared.isReachable {
-            checkBoxView.removeFromSuperview()
-            isCheckBoxOpened = false
-            checkBoxView = CheckBoxView()
             loadData(reload: true)
         } else {
-            self.networkErrorAlert(message: "") {
-                self.loadData(reload: true)
-            }
+            getATMsFromEntity()
+            getInfoboxesFromEntity()
+            getFilialsFromEntity()
         }
+    }
+    
+    private func getATMsFromEntity() {
+        let atmsEntities = CoreDataService.shared.readATMs()
+        atms = [ATMElement]()
+        for atm in atmsEntities {
+        let atm = ATMElement(
+            id: atm.id ?? "",
+            area: atm.area ?? "",
+            cityType: atm.cityType ?? "",
+            city: atm.city ?? "",
+            addressType: atm.addressType ?? "",
+            address: atm.address ?? "",
+            house: atm.house ?? "",
+            installPlace: atm.installPlace ?? "",
+            currency: atm.currency,
+            cashIn: atm.cashIn,
+            workTime: atm.workTime ?? "",
+            gpsX: atm.gpsX ?? "",
+            gpsY: atm.gpsY ?? "",
+            installPlaceFull: atm.installPlaceFull ?? "",
+            workTimeFull: atm.workTimeFull ?? "",
+            atmType: atm.atmType ?? "",
+            atmError: atm.atmError ?? "",
+            atmPrinter: atm.atmPrinter ?? "")
+            atms.append(atm)
+        }
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            self.atms = (self.sortArraysByDistance(array: self.atms))
+        }
+        createATMAnnotations()
+    }
+    
+    private func getInfoboxesFromEntity() {
+        let infoboxesEntity = CoreDataService.shared.readInfoboxes()
+        infoboxes = [InfoboxElement]()
+        for infobox in infoboxesEntity {
+        let infobox = InfoboxElement(
+            id: Int(bitPattern: infobox.id),
+            area: infobox.area ?? "",
+            cityType: infobox.cityType ?? "",
+            city: infobox.city ?? "",
+            addressType: infobox.addressType ?? "",
+            currency: infobox.currency,
+            cashIn: infobox.cashIn,
+            address: infobox.address ?? "",
+            house: infobox.house ?? "",
+            locationNameDescription: infobox.locationNameDescription ?? "",
+            installPlace: infobox.installPlace ?? "",
+            workTime: infobox.workTime ?? "",
+            timeLong: infobox.timeLong ?? "",
+            gpsX: infobox.gpsX ?? "",
+            gpsY: infobox.gpsY ?? "",
+            infType: infobox.infType ?? "",
+            cashInError: infobox.cashInError ?? "",
+            infStatus: infobox.infStatus ?? "",
+            typeCashIn: infobox.typeCashIn ?? "",
+            infPrinter: infobox.infPrinter ?? "",
+            regionPayment: infobox.regionPayment ?? "",
+            rechargePayment: infobox.rechargePayment ?? "")
+            infoboxes.append(infobox)
+        }
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            self.infoboxes = (self.sortArraysByDistance(array: self.infoboxes))
+        }
+        createInfoboxAnnotations()
+    }
+    
+    private func getFilialsFromEntity() {
+        let filialsEntity = CoreDataService.shared.readFilials()
+        filials = [FilialElement]()
+        for filial in filialsEntity {
+        let filial = FilialElement(
+            id: filial.id ?? "",
+            sapID: filial.sapID ?? "",
+            installPlace: filial.installPlace ?? "",
+            phoneNumber: filial.phoneNumber,
+            cityType: filial.cityType ?? "",
+            city: filial.city ?? "",
+            addressType: filial.addressType ?? "",
+            address: filial.address ?? "",
+            house: filial.house ?? "",
+            temporaryCityType: filial.temporaryCityType,
+            temporaryCity: filial.temporaryCity,
+            bik: filial.bik,
+            unp: filial.unp,
+            temporaryAddressType: filial.temporaryAddressType ?? "",
+            temporaryAddress: filial.temporaryAddress ?? "",
+            temporaryHouse: filial.temporaryHouse ?? "",
+            additionalInfo: filial.additionalInfo ?? "",
+            workTime: filial.workTime ?? "",
+            gpsX: filial.gpsX ?? "",
+            gpsY: filial.gpsY ?? "",
+            belCheckingAccountNumber: filial.belCheckingAccountNumber ?? "",
+            foreignCheckingAccountNumber: filial.foreignCheckingAccountNumber ?? "",
+            filialNumber: filial.filialNumber ?? "",
+            cbuNumber: filial.cbuNumber ?? "",
+            otdNumber: filial.otdNumber ?? "",
+            dopNumber: filial.dopNumber ?? "")
+            filials.append(filial)
+        }
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            self.filials = (self.sortArraysByDistance(array: self.filials))
+        }
+        createFilialAnnotations()
     }
     
     @objc private func checkBoxButtonTapped() {

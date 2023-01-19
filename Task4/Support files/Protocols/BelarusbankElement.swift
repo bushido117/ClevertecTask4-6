@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Coordinate: Hashable {
+protocol BelarusbankElement: Hashable {
     var gpsX: String { get }
     var gpsY: String { get }
     var workTime: String { get }
@@ -21,8 +21,10 @@ protocol Coordinate: Hashable {
     var address: String { get }
     var house: String { get }
 }
-extension Coordinate {
+
+extension BelarusbankElement {
     var currency: String? { return nil }
     var cashIn: String? { return nil }
     var phoneNumber: String? { return nil }
+//    var workTime: String? { return nil }
 }

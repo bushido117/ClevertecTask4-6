@@ -75,7 +75,7 @@ final class DetailsViewController: UIViewController {
         }
     }
     
-    private func createRout<T: Coordinate>(to element: T) {
+    private func createRout<T: BelarusbankElement>(to element: T) {
         let coordinate = CLLocationCoordinate2D(
             latitude: (Double(element.gpsX) ?? 0),
             longitude: (Double(element.gpsY) ?? 0))

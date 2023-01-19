@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ATMElementEntity" representedClassName="ATMElementEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="addressType" optional="YES" attributeType="String"/>
+        <attribute name="area" optional="YES" attributeType="String"/>
+        <attribute name="atmError" optional="YES" attributeType="String"/>
+        <attribute name="atmPrinter" optional="YES" attributeType="String"/>
+        <attribute name="atmType" optional="YES" attributeType="String"/>
+        <attribute name="cashIn" optional="YES" attributeType="String"/>
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="cityType" optional="YES" attributeType="String"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="gpsX" optional="YES" attributeType="String"/>
+        <attribute name="gpsY" optional="YES" attributeType="String"/>
+        <attribute name="house" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="installPlace" optional="YES" attributeType="String"/>
+        <attribute name="installPlaceFull" optional="YES" attributeType="String"/>
+        <attribute name="workTime" optional="YES" attributeType="String"/>
+        <attribute name="workTimeFull" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="FilialElementEntity" representedClassName="FilialElementEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="additionalInfo" optional="YES" attributeType="String"/>
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="addressType" optional="YES" attributeType="String"/>
+        <attribute name="belCheckingAccountNumber" optional="YES" attributeType="String"/>
+        <attribute name="bik" optional="YES" attributeType="String"/>
+        <attribute name="cbuNumber" optional="YES" attributeType="String"/>
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="cityType" optional="YES" attributeType="String"/>
+        <attribute name="dopNumber" optional="YES" attributeType="String"/>
+        <attribute name="filialNumber" optional="YES" attributeType="String"/>
+        <attribute name="foreignCheckingAccountNumber" optional="YES" attributeType="String"/>
+        <attribute name="gpsX" optional="YES" attributeType="String"/>
+        <attribute name="gpsY" optional="YES" attributeType="String"/>
+        <attribute name="house" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="installPlace" optional="YES" attributeType="String"/>
+        <attribute name="otdNumber" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String"/>
+        <attribute name="sapID" optional="YES" attributeType="String"/>
+        <attribute name="temporaryAddress" optional="YES" attributeType="String"/>
+        <attribute name="temporaryAddressType" optional="YES" attributeType="String"/>
+        <attribute name="temporaryCity" optional="YES" attributeType="String"/>
+        <attribute name="temporaryCityType" optional="YES" attributeType="String"/>
+        <attribute name="temporaryHouse" optional="YES" attributeType="String"/>
+        <attribute name="unp" optional="YES" attributeType="String"/>
+        <attribute name="workTime" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="InfoboxElementEntity" representedClassName="InfoboxElementEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="addressType" optional="YES" attributeType="String"/>
+        <attribute name="area" optional="YES" attributeType="String"/>
+        <attribute name="cashIn" optional="YES" attributeType="String"/>
+        <attribute name="cashInError" optional="YES" attributeType="String"/>
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="cityType" optional="YES" attributeType="String"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="gpsX" optional="YES" attributeType="String"/>
+        <attribute name="gpsY" optional="YES" attributeType="String"/>
+        <attribute name="house" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="infPrinter" optional="YES" attributeType="String"/>
+        <attribute name="infStatus" optional="YES" attributeType="String"/>
+        <attribute name="infType" optional="YES" attributeType="String"/>
+        <attribute name="installPlace" optional="YES" attributeType="String"/>
+        <attribute name="locationNameDescription" optional="YES" attributeType="String"/>
+        <attribute name="rechargePayment" optional="YES" attributeType="String"/>
+        <attribute name="regionPayment" optional="YES" attributeType="String"/>
+        <attribute name="timeLong" optional="YES" attributeType="String"/>
+        <attribute name="typeCashIn" optional="YES" attributeType="String"/>
+        <attribute name="workTime" optional="YES" attributeType="String"/>
+    </entity>
+</model>
