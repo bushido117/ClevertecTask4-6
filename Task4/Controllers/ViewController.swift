@@ -222,36 +222,16 @@ final class ViewController: UIViewController {
     }
     
     private func createATMAnnotations() {
-            for atm in atms {
-                let coordinates = CLLocationCoordinate2D(
-                    latitude: (Double(atm.gpsX) ?? 0) as CLLocationDegrees,
-                    longitude: (Double(atm.gpsY) ?? 0) as CLLocationDegrees)
-                let annotation = CustomAnnotation(
-                    placeName: atm.installPlace,
-                    workTime: atm.workTime,
-                    currency: atm.currency,
-                    cashIn: atm.cashIn,
-                    id: atm.id,
-                    coordinate: coordinates,
-                    type: .atm)
-                mapView.addAnnotation(annotation)
+        for atm in atms {
+            let annotation = atm.createAnnotation()
+            mapView.addAnnotation(annotation)
             atmAnnotations.append(annotation)
         }
     }
     
     private func createInfoboxAnnotations() {
         for infobox in infoboxes {
-            let coordinates = CLLocationCoordinate2D(
-                latitude: (Double(infobox.gpsX) ?? 0) as CLLocationDegrees,
-                longitude: (Double(infobox.gpsY) ?? 0) as CLLocationDegrees)
-            let annotation = CustomAnnotation(
-                placeName: infobox.installPlace,
-                workTime: infobox.workTime,
-                currency: infobox.currency,
-                cashIn: infobox.cashIn,
-                id: String(infobox.id),
-                coordinate: coordinates,
-                type: .infobox)
+            let annotation = infobox.createAnnotation()
             mapView.addAnnotation(annotation)
             infoboxAnnotations.append(annotation)
         }
@@ -259,18 +239,7 @@ final class ViewController: UIViewController {
     
     private func createFilialAnnotations() {
         for filial in filials {
-            let filialFullAdress = filial.cityType + filial.city + filial.addressType + filial.address + filial.house
-            let coordinates = CLLocationCoordinate2D(
-                latitude: (Double(filial.gpsX) ?? 0) as CLLocationDegrees,
-                longitude: (Double(filial.gpsY) ?? 0) as CLLocationDegrees)
-            let annotation = CustomAnnotation(
-                placeName: filial.installPlace,
-                workTime: filial.workTime,
-                address: filialFullAdress,
-                phoneNumber: filial.phoneNumber ?? "",
-                id: filial.id,
-                coordinate: coordinates,
-                type: .filial)
+            let annotation = filial.createAnnotation()
             mapView.addAnnotation(annotation)
             filialsAnnotations.append(annotation)
         }

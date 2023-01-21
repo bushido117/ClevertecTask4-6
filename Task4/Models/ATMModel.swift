@@ -5,6 +5,9 @@
 //  Created by Вадим Сайко on 9.01.23.
 //
 
+//import CoreData
+import MapKit
+
 struct ATMElement: Codable, Hashable, BelarusbankElement {
     
     let id, area, cityType, city: String
@@ -31,5 +34,22 @@ struct ATMElement: Codable, Hashable, BelarusbankElement {
         case currency
         case cashIn = "cash_in"
         case atmPrinter = "ATM_printer"
+    }
+}
+
+extension ATMElement {
+    func createAnnotation() -> CustomAnnotation {
+        let coordinates = CLLocationCoordinate2D(
+            latitude: (Double(self.gpsX) ?? 0) as CLLocationDegrees,
+            longitude: (Double(self.gpsY) ?? 0) as CLLocationDegrees)
+        let annotation = CustomAnnotation(
+            placeName: self.installPlace,
+            workTime: self.workTime,
+            currency: self.currency,
+            cashIn: self.cashIn,
+            id: self.id,
+            coordinate: coordinates,
+            type: .atm)
+        return annotation
     }
 }

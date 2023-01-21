@@ -5,6 +5,9 @@
 //  Created by Вадим Сайко on 10.01.23.
 //
 
+import CoreData
+import MapKit
+
 struct FilialElement: Codable, Hashable, BelarusbankElement {
     
     let id, sapID, installPlace: String
@@ -43,5 +46,23 @@ struct FilialElement: Codable, Hashable, BelarusbankElement {
         case filialNumber = "filial_num"
         case cbuNumber = "cbu_num"
         case otdNumber = "otd_num"
+    }
+}
+
+extension FilialElement {
+    func createAnnotation() -> CustomAnnotation {
+        let filialFullAdress = self.cityType + self.city + self.addressType + self.address + self.house
+        let coordinates = CLLocationCoordinate2D(
+            latitude: (Double(self.gpsX) ?? 0) as CLLocationDegrees,
+            longitude: (Double(self.gpsY) ?? 0) as CLLocationDegrees)
+        let annotation = CustomAnnotation(
+            placeName: self.installPlace,
+            workTime: self.workTime,
+            address: filialFullAdress,
+            phoneNumber: self.phoneNumber ?? "",
+            id: self.id,
+            coordinate: coordinates,
+            type: .filial)
+        return annotation
     }
 }

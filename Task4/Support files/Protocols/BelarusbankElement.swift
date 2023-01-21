@@ -26,5 +26,4 @@ extension BelarusbankElement {
     var currency: String? { return nil }
     var cashIn: String? { return nil }
     var phoneNumber: String? { return nil }
-//    var workTime: String? { return nil }
 }

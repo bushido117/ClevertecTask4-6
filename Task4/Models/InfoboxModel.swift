@@ -5,6 +5,9 @@
 //  Created by Вадим Сайко on 10.01.23.
 //
 
+//import CoreData
+import MapKit
+
 struct InfoboxElement: Codable, Hashable, BelarusbankElement {
     
     let id: Int
@@ -37,5 +40,22 @@ struct InfoboxElement: Codable, Hashable, BelarusbankElement {
         case regionPayment = "region_platej"
         case rechargePayment = "popolnenie_platej"
         case infStatus = "inf_status"
+    }
+}
+
+extension InfoboxElement {
+    func createAnnotation() -> CustomAnnotation {
+        let coordinates = CLLocationCoordinate2D(
+            latitude: (Double(self.gpsX) ?? 0) as CLLocationDegrees,
+            longitude: (Double(self.gpsY) ?? 0) as CLLocationDegrees)
+        let annotation = CustomAnnotation(
+            placeName: self.installPlace,
+            workTime: self.workTime,
+            currency: self.currency,
+            cashIn: self.cashIn,
+            id: String(self.id),
+            coordinate: coordinates,
+            type: .infobox)
+        return annotation
     }
 }
